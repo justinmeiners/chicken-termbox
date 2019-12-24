@@ -97,12 +97,12 @@
     (termbox-set-cursor -1 -1))
 
 (define (termbox-poll-event)
-    (get-event -1))
+    (priv-termbox-get-event -1))
 
 (define (termbox-peek-event milis)
-    (get-event milis))
+    (priv-termbox-get-event milis))
 
-(define get-event
+(define priv-termbox-get-event
     (foreign-safe-lambda* scheme-object ((int timeout))
         "C_word *a, type, mod, key, ch, w, h, x, y, sym;"
         "struct tb_event evt;"
