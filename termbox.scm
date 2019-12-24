@@ -3,31 +3,69 @@
     (import (chicken foreign))
     (import srfi-4))
 
-
-(foreign-declare "#include \"termbox/termbox.h\"")
 (foreign-declare "#include \"termbox/termbox.c\"")
 (foreign-declare "#include \"termbox/utf8.c\"")
 
 
-(define TB_DEFAULT (foreign-value "TB_DEFAULT" unsigned-integer32))
-(define TB_BLACK (foreign-value "TB_BLACK" unsigned-integer32))
-(define TB_RED (foreign-value "TB_RED" unsigned-integer32))
-(define TB_GREEN (foreign-value "TB_GREEN" unsigned-integer32))
-(define TB_YELLOW (foreign-value "TB_YELLOW" unsigned-integer32))
-(define TB_BLUE (foreign-value "TB_BLUE" unsigned-integer32))
-(define TB_MAGENTA (foreign-value "TB_MAGENTA" unsigned-integer32))
-(define TB_CYAN (foreign-value "TB_CYAN" unsigned-integer32))
-(define TB_WHITE (foreign-value "TB_WHITE" unsigned-integer32))
+(define tb/key/f1 (foreign-value "TB_KEY_F1" unsigned-integer32))
+(define tb/key/f2 (foreign-value "TB_KEY_F2" unsigned-integer32))
+(define tb/key/f3 (foreign-value "TB_KEY_F3" unsigned-integer32))
+(define tb/key/f4 (foreign-value "TB_KEY_F4" unsigned-integer32))
+(define tb/key/f5 (foreign-value "TB_KEY_F5" unsigned-integer32))
+(define tb/key/f6 (foreign-value "TB_KEY_F6" unsigned-integer32))
+(define tb/key/f7 (foreign-value "TB_KEY_F7" unsigned-integer32))
+(define tb/key/f8 (foreign-value "TB_KEY_F8" unsigned-integer32))
+(define tb/key/f9 (foreign-value "TB_KEY_F9" unsigned-integer32))
+(define tb/key/f10 (foreign-value "TB_KEY_F10" unsigned-integer32))
+(define tb/key/f11 (foreign-value "TB_KEY_F11" unsigned-integer32))
+(define tb/key/f12 (foreign-value "TB_KEY_F12" unsigned-integer32))
+(define tb/key/insert (foreign-value "TB_KEY_INSERT" unsigned-integer32))
+(define tb/key/delete (foreign-value "TB_KEY_DELETE" unsigned-integer32))
+(define tb/key/home (foreign-value "TB_KEY_HOME" unsigned-integer32))
+(define tb/key/end (foreign-value "TB_KEY_END" unsigned-integer32))
+(define tb/key/pgup (foreign-value "TB_KEY_PGUP" unsigned-integer32))
+(define tb/key/pgdn (foreign-value "TB_KEY_PGDN" unsigned-integer32))
+(define tb/key/arrowup (foreign-value "TB_KEY_ARROW_UP" unsigned-integer32))
+(define tb/key/arrowdown (foreign-value "TB_KEY_ARROW_DOWN" unsigned-integer32))
+(define tb/key/arrowleft (foreign-value "TB_KEY_ARROW_LEFT" unsigned-integer32))
+(define tb/key/arrowright (foreign-value "TB_KEY_ARROW_RIGHT" unsigned-integer32))
+(define tb/key/mouseleft (foreign-value "TB_KEY_MOUSE_LEFT" unsigned-integer32))
+(define tb/key/mouseright (foreign-value "TB_KEY_MOUSE_RIGHT" unsigned-integer32))
+(define tb/key/mousemiddle (foreign-value "TB_KEY_MOUSE_MIDDLE" unsigned-integer32))
+(define tb/key/mouserelease (foreign-value "TB_KEY_MOUSE_RELEASE" unsigned-integer32))
+(define tb/key/mousewheelup (foreign-value "TB_KEY_MOUSE_WHEEL_UP" unsigned-integer32))
+(define tb/key/mousewheeldown (foreign-value "TB_KEY_MOUSE_WHEEL_DOWN" unsigned-integer32))
 
-(define TB_BOLD (foreign-value "TB_BOLD" unsigned-integer32))
-(define TB_UNDERLINE (foreign-value "TB_UNDERLINE" unsigned-integer32))
-(define TB_REVERSE (foreign-value "TB_REVERSE" unsigned-integer32))
+
+(define tb/mod/alt (foreign-value "TB_MOD_ALT" unsigned-integer32))
+(define tb/mod/motion (foreign-value "TB_MOD_MOTION" unsigned-integer32))
+
+
+(define tb/color/default (foreign-value "TB_DEFAULT" unsigned-integer32))
+(define tb/color/black (foreign-value "TB_BLACK" unsigned-integer32))
+(define tb/color/red (foreign-value "TB_RED" unsigned-integer32))
+(define tb/color/green (foreign-value "TB_GREEN" unsigned-integer32))
+(define tb/color/yellow (foreign-value "TB_YELLOW" unsigned-integer32))
+(define tb/color/blue (foreign-value "TB_BLUE" unsigned-integer32))
+(define tb/color/magenta (foreign-value "TB_MAGENTA" unsigned-integer32))
+(define tb/color/cyan (foreign-value "TB_CYAN" unsigned-integer32))
+(define tb/color/white (foreign-value "TB_WHITE" unsigned-integer32))
+
+(define tb/attrib/bold (foreign-value "TB_BOLD" unsigned-integer32))
+(define tb/attrib/underline (foreign-value "TB_UNDERLINE" unsigned-integer32))
+(define tb/attrib/reverse (foreign-value "TB_REVERSE" unsigned-integer32))
 
 (define termbox-init 
     (foreign-lambda int "tb_init"))
 
 (define termbox-shutdown
     (foreign-lambda void "tb_shutdown"))
+
+(define (termbox-run thunk)
+    (dynamic-wind 
+        termbox-init
+        thunk
+        termbox-shutdown))
 
 (define termbox-width
     (foreign-lambda int "tb_width"))
@@ -143,18 +181,18 @@
         "}"))
 
 
-(define TB_INPUT_CURRENT (foreign-value "TB_INPUT_CURRENT" int))
-(define TB_INPUT_ESC (foreign-value "TB_INPUT_ESC" int))
-(define TB_INPUT_ALT (foreign-value "TB_INPUT_ALT" int))
-(define TB_INPUT_MOUSE (foreign-value "TB_INPUT_MOUSE" int))
+(define tb/input/current (foreign-value "TB_INPUT_CURRENT" int))
+(define tb/input/esc (foreign-value "TB_INPUT_ESC" int))
+(define tb/input/alt (foreign-value "TB_INPUT_ALT" int))
+(define tb/input/mouse (foreign-value "TB_INPUT_MOUSE" int))
 
 (define termbox-select-input-mode
     (foreign-lambda int "tb_select_input_mode" int))
 
-(define TB_OUTPUT_CURRENT (foreign-value "TB_OUTPUT_CURRENT" int))
-(define TB_OUTPUT_NORMAL (foreign-value "TB_OUTPUT_NORMAL" int))
-(define TB_OUTPUT_256 (foreign-value "TB_OUTPUT_256" int))
-(define TB_OUTPUT_GRAYSCALE (foreign-value "TB_OUTPUT_GRAYSCALE" int))
+(define tb/output/current (foreign-value "TB_OUTPUT_CURRENT" int))
+(define tb/output/normal (foreign-value "TB_OUTPUT_NORMAL" int))
+(define tb/output/256 (foreign-value "TB_OUTPUT_256" int))
+(define tb/output/grayscale (foreign-value "TB_OUTPUT_GRAYSCALE" int))
 
 (define termbox-select-output-mode
     (foreign-lambda int "tb_select_output_mode" int))
