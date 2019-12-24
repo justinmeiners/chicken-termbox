@@ -1,1 +1,8 @@
 temp/
+*.so
+*.o
+
+termbox.build.sh
+termbox.import.scm
+termbox.install.sh
+termbox.link

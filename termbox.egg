@@ -4,5 +4,5 @@
  (category ui)
  (platform unix)
  (components
-    (extension termbox
-        (source  "termbox.scm"))))
+    (extension termbox)
+        (source "termbox.scm")))

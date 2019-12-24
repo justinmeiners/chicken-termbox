@@ -1,3 +1,5 @@
+(import srfi-4)
+
 (import termbox)
 
 (termbox-init)

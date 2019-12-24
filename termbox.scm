@@ -1,7 +1,13 @@
-(import (chicken foreign))
-(import srfi-4)
+(module termbox
+    *
+    (import (chicken foreign))
+    (import srfi-4))
 
-(foreign-declare "#include \"termbox.h\"")
+
+(foreign-declare "#include \"termbox/termbox.h\"")
+(foreign-declare "#include \"termbox/termbox.c\"")
+(foreign-declare "#include \"termbox/utf8.c\"")
+
 
 (define TB_DEFAULT (foreign-value "TB_DEFAULT" unsigned-integer32))
 (define TB_BLACK (foreign-value "TB_BLACK" unsigned-integer32))
