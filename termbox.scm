@@ -93,6 +93,9 @@
 (define termbox-set-cursor
     (foreign-lambda void "tb_set_cursor" int int))
 
+(define termbox-hide-cursor
+    (termbox-set-cursor -1 -1))
+
 (define (termbox-poll-event)
     (get-event -1))
 
@@ -105,7 +108,7 @@
         "struct tb_event evt;"
 
         "int res;"
-        "if (timeout < 0) {"
+        "if (timeout >= 0) {"
         "   res = tb_peek_event(&evt, timeout);"
         "} else { "
         "   res = tb_poll_event(&evt);"
@@ -170,8 +173,8 @@
         "struct tb_cell *c = tb_cell_buffer() + offset;"
 
         "int row, col;"  
-        "for (col = 0; col < w; ++col) { "
-         "   for (row = 0; row < h; ++row) {"
+        "for (row = 0; row < h; ++row) { "
+         "   for (col = 0; col < w; ++col) {"
          "      c->ch = characters[i];"
          "      c->fg = fg[i];"
          "      c->bg = bg[i];"
