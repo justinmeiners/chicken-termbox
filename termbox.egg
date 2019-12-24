@@ -1,0 +1,8 @@
+((author "Justin Meiners")
+ (synopsis "Minimal terminal UI library. Bindings for nsf/termbox")
+ (license "MIT")
+ (category ui)
+ (platform unix)
+ (components
+    (extension termbox
+        (source  "termbox.scm"))))
