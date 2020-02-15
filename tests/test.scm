@@ -52,6 +52,10 @@
 (termbox-peek-event 2000)
 (termbox-clear)
 
+(termbox-shutdown)
+
+(termbox-init "/dev/tty")
+
 (display-note "Press any key")
 
 (termbox-present)

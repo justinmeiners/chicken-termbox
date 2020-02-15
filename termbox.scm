@@ -103,8 +103,15 @@
 (define tb/event/resize (foreign-value "TB_EVENT_RESIZE" unsigned-integer32))
 (define tb/event/mouse (foreign-value "TB_EVENT_MOUSE" unsigned-integer32))
 
-(define termbox-init 
-    (foreign-lambda int "tb_init"))
+(define priv-termbox-init (foreign-lambda int "tb_init"))
+(define priv-termbox-init-file (foreign-lambda int "tb_init_file" c-string))
+(define priv-termbox-init-fd (foreign-lambda int "tb_init_fd" integer))
+
+(define (termbox-init . args)
+    (cond ((null? args) (priv-termbox-init))
+          ((string? (car args)) (priv-termbox-init-file (car args)))
+          ((number? (car args)) (priv-termbox-init-fd (car args)))
+          (else (error "bad argument type"))))
 
 (define termbox-shutdown
     (foreign-lambda void "tb_shutdown"))
